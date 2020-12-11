@@ -1,9 +1,9 @@
 #
-# ONLY EDIT THIS FILE IN github.com/cloudposse/terraform-null-label
+# ONLY EDIT THIS FILE IN ../terraform-null-label
 # All other instances of this file should be a copy of that one
 #
 #
-# Copy this file from https://github.com/cloudposse/terraform-null-label/blob/master/exports/context.tf
+# Copy this file from ../terraform-null-label/exports/context.tf
 # and then place it in your Terraform module to automatically get
 # Cloud Posse's standard configuration inputs suitable for passing
 # to Cloud Posse modules.
@@ -19,7 +19,7 @@
 #
 
 module "this" {
-  source = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  source = "../terraform-null-label"
 
   enabled             = var.enabled
   namespace           = var.namespace

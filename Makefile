@@ -1,10 +1,40 @@
 SHELL := /bin/bash
 
-# List of targets the `readme` target should call before generating the readme
-export README_DEPS ?= docs/targets.md docs/terraform.md
+test:
+	$(MAKE) fmt
+	$(MAKE) validate
 
--include $(shell curl -sSL -o .build-harness "https://git.io/build-harness"; echo .build-harness)
+clean:
+	rm -f main.tf.json
 
-## Lint terraform code
-lint:
-	$(SELF) terraform/install terraform/get-modules terraform/get-plugins terraform/lint terraform/validate
+init:
+	terraform init
+
+upgrade:
+	terraform init -upgrade
+
+fmt:
+	for a in *.tf *.tfvars; do if [[ -f $$a ]]; then terraform fmt $$a; fi; done
+
+validate:
+	terraform validate
+
+plan:
+	terraform plan -out=.plan
+
+apply:
+	terraform apply .plan
+	rm -f .plan
+
+refresh:
+	terraform refresh
+
+console:
+	terraform console
+
+%:
+	terraform workspace select "$(shell echo "$@" | sed 's#--#.#g')"
+
+good:
+	$(MAKE) upgrade fmt validate
+	gs
